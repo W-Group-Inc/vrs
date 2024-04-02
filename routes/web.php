@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 Route::get('home-vrs/{id}', 'VisitorController@index');
-Route::post('/new_visitor', 'VisitorController@store')->name('store');
+Route::post('/new_visitor/{id}', 'VisitorController@store')->name('store');
 Auth::routes();
 // vrs
 Route::group(['middleware' => 'auth'], function () {

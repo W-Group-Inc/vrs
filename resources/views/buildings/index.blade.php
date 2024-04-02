@@ -63,7 +63,7 @@
                     <div class="row">
                         <div class="col-12 mb-10">
                             <label>Name</label>
-                            <input name="name" id="name" class="form-control" type="text" placeholder="Enter Name">
+                            <input name="name" id="name" class="form-control" type="text" placeholder="Enter Name" required>
                         </div>
                         <div class="col-12 mb-10">
                             <label>Address</label>

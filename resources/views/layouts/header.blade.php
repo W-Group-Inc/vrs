@@ -7,7 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Visitor Registration System</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>@yield('title', 'Visitor Registration System')</title>
     <link rel="icon" type="image/x-icon" href="{{URL::asset('/images/visitor.png')}}">
 
     <!-- Fonts -->
@@ -72,13 +73,13 @@
                     <li>
                         <a href="{{ url('/visitor_id') }}"><i class="fa fa-id-badge"></i><span class="nav-label">Visitor ID Cards</span></a>
                     </li>
+                    @if (@auth()->user()->position == 'Administrator' && (@auth()->user()->name == 'Admin'))
                     <li>
                         <a href="{{ url('/tenant') }}"><i class="fa fa-home"></i><span class="nav-label">Tenants</span></a>
                     </li>
                     <li>
                         <a href="{{ url('/building') }}"><i class="fa fa-building"></i><span class="nav-label">Buildings</span></a>
                     </li>
-                    @if (@auth()->user()->role == 'Admin')
                     <li>
                         <a href="{{ url('/user') }}"><i class="fa fa-users" aria-hidden="true"></i><span class="nav-label">Users</span></a>
                     </li>

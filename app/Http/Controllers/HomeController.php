@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Visitor;
+use App\Tenant;
+use App\Building;
 use Illuminate\Support\Facades\Hash;
 class HomeController extends Controller
 {
@@ -24,7 +27,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('dashboard.index');
+        $visitors = Visitor::all(); 
+        $buildings = Building::all();
+        return view('dashboard.index', compact('visitors', 'buildings')); 
     }
 
     public function changePassword()

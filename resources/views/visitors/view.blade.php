@@ -8,14 +8,28 @@
                 </button>
             </div>
             <div class="modal-body">
-                <div class="row mb-10" align="center">
-                    <div class="col-auto" style="display: inline-flex">
+                <div class="row">
+                    <div class="col-md-6 mb-10">
                         <label class="col-form-h4">Visitor Name:</label>
                         <label class="col-form-h4" style="font-weight: 500">&nbsp;{{$visitor->name}}</label>
                     </div>
+                    <div class="col-md-6 mb-10">
+                        <label class="col-form-h4">Tenant Name:</label>
+                        <label class="col-form-h4" style="font-weight: 500">&nbsp;{{$visitor->tenant_name}}</label>
+                    </div>
                 </div>
-                <div class="row mb-10" align="center">
-                    <div class="col-auto" style="display: inline-flex">
+                <div class="row">
+                    <div class="col-md-6 mb-10">
+                        <label class="col-form-h4">Building Name:</label>
+                        <label class="col-form-h4" style="font-weight: 500">&nbsp;
+                            @foreach($buildings as $building)
+                                @if($building->id == $visitor->building_location)
+                                    {{ $building->name }}
+                                @endif
+                            @endforeach
+                        </label>
+                    </div>
+                    <div class="col-md-6 mb-10">
                         <label class="col-form-h4">Date Entered:</label>
                         <label class="col-form-h4" style="font-weight: 500">&nbsp;{{$visitor->created_at->format('m/d/Y - h:i:s A')}}</label>
                     </div>

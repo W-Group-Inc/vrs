@@ -19,35 +19,39 @@
                                             <th>Visitor Name</th>
                                             <th>Date Entered</th>
                                             <th>Tenant Name</th>
+                                            <th>Purpose</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($visitors as $visitor)
-                                        <tr>
-                                            @if ($visitor->visitor_id === null)
-                                            <td style="background-color: #f14d4d" width="10%">{{$visitor->visitor_id}}</td>
-                                            @else
-                                            <td width="10%">{{$visitor->visitor_id}}</td>
-                                            @endif
-                                            <td width="5%"><img class="img-visitor" src="{{$visitor->image}}"></td>
-                                            <td width="24%">{{$visitor->name}}</td>
-                                            <td width="23%">{{$visitor->created_at->format('m/d/Y h:i:s A')}}</td>
-                                            <td width="23%">{{$visitor->tenant_name}}</td>
-                                            <td width="15%" align="center">
-                                                <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" title="View Information" data-target="#view_id{{ $visitor->id }}"><i class="fa fa-eye"></i></button>
-                                                @if ($visitor->visitor_id === null )
-                                                    <button type="button" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
-                                                @else
-                                                    <button type="button" style="display: none" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
-                                                @endif
+                                            @if(auth()->user()->location == $visitor->building_location || (auth()->user()->name == 'Admin'))
+                                            <tr>
                                                 @if ($visitor->visitor_id === null)
-                                                    <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID" style="display: none"><i class="fa fa-repeat"></i></a>
+                                                <td style="background-color: #f14d4d" width="10%">{{$visitor->visitor_id}}</td>
                                                 @else
-                                                    <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID"><i class="fa fa-repeat"></i></a>
+                                                <td width="10%">{{$visitor->visitor_id}}</td>
                                                 @endif
-                                            </td>
-                                        </tr>
+                                                <td width="8%"><img class="img-visitor" src="{{$visitor->image}}"></td>
+                                                <td width="20%">{{$visitor->name}}</td>
+                                                <td width="17%">{{$visitor->created_at->format('m/d/Y h:i:s A')}}</td>
+                                                <td width="20%">{{$visitor->tenant_name}}</td>
+                                                <td width="15%">{{$visitor->purpose}}</td>
+                                                <td width="10%" align="center">
+                                                    <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" title="View Information" data-target="#view_id{{ $visitor->id }}"><i class="fa fa-eye"></i></button>
+                                                    @if ($visitor->visitor_id === null )
+                                                        <button type="button" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
+                                                    @else
+                                                        <button type="button" style="display: none" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
+                                                    @endif
+                                                    @if ($visitor->visitor_id === null)
+                                                        <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID" style="display: none"><i class="fa fa-repeat"></i></a>
+                                                    @else
+                                                        <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID"><i class="fa fa-repeat"></i></a>
+                                                    @endif
+                                                </td>
+                                            </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -59,7 +63,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="add_visitor_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="add_visitor_id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <form id="addUserForm" method="POST" action="{{ url('new_user') }}" autocomplete="off">
         @csrf
         <div class="modal-dialog" role="document">
@@ -85,7 +89,7 @@
             </div>
         </div>
     </form>
-</div>
+</div> -->
 @foreach($visitors as $visitor)
     @include('visitors.edit')
 @endforeach
@@ -96,13 +100,6 @@
 @section('footer')
 <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
 
-<style>
-    .img-visitor {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-    }
-</style>
 <script>
     $(document).ready(function(){
         $('.dataTables-visitor').DataTable({

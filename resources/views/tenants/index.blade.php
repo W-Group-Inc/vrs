@@ -26,7 +26,7 @@
                                         @foreach($tenants as $tenant)
                                             <tr>
                                                 <td width="30%">{{ $tenant->name }}</td>
-                                                <td width="40%">{{ $tenant->building->name }}</td>
+                                                <td width="40%">{{ optional($tenant->building)->name }}</td>
                                                 <td width="10%" align="center">
                                                     <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#edit_tenant{{ $tenant->id }}"><i class="fa fa fa-pencil"></i><a href="{{ url('update_tenant/' .$tenant->id) }}"></a></button>
                                                     <a href="{{ route('tenant.delete', ['id' => $tenant->id]) }}">
@@ -49,7 +49,7 @@
     @include('tenants.edit')
 @endforeach
 <div class="modal fade" id="add_tenant" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <form method="POST" action="{{ url('new_tenant') }}" autocomplete="off">
+    <form id="addTenantForm" method="POST" action="{{ url('new_tenant') }}" autocomplete="off">
         @csrf
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -63,13 +63,13 @@
                     <div class="row">
                         <div class="col-12 mb-10">
                             <label>Name</label>
-                            <input name="name" id="name" class="form-control" type="text" placeholder="Enter Name">
+                            <input name="name" id="name" class="form-control @if($errors->first('name')) is-invalid @endif" type="text" placeholder="Enter Name">
                         </div>
                         <div class="col-12 mb-10">
                             <label>Building Name</label>
-                            <select name="building_id" id="building_id" class="form-control selectpicker" title="Select Building Name">
+                            <select name="building_id" id="building_id" class="form-control selectpicker @if($errors->first('building_id')) is-invalid @endif" title="Select Building Name">
                                 @foreach($buildings as $building)
-                                    <option value="{{ $building->id }}" {{ ($building->id == $building->name) ? 'selected' : '' }}> {{ $building->name }}</option>
+                                    <option value="{{ $building->id }}"> {{ $building->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -77,10 +77,11 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save changes</button>
+                    <button type="button" class="btn btn-success" onclick="submitTenant()">Save changes</button>
                 </div>
             </div>
         </div>
     </form>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 @endsection

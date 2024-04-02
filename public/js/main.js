@@ -6,7 +6,10 @@ function submitForm() {
     var data = form.serialize();
 
     form.find('.is-invalid').removeClass('is-invalid');
-    form.find('.invalid-feedback').remove();
+    form.find('.invalid-feedback').remove(); 
+
+    // Refresh selectpicker elements to apply validation
+    $('.selectpicker').selectpicker('refresh');
 
     $.ajax({
         type: method,
@@ -14,7 +17,6 @@ function submitForm() {
         data: data,
         success: function(response) {
             if (response.success) {
-                // alert(response.message);
                 Swal.fire({
                     icon: 'success',
                     title: 'Success',
@@ -28,7 +30,15 @@ function submitForm() {
             if (response.status === 422) {
                 var errors = response.responseJSON.errors;
                 $.each(errors, function (key, value) {
-                    $("#" + key).addClass("is-invalid").after('<span class="invalid-feedback text-danger">'+value+'</span>');
+                    if ($("#" + key).hasClass('selectpicker')) {
+                        // Add 'is-invalid' class to selectpicker's parent
+                        $("#" + key).closest('.bootstrap-select').addClass("is-invalid");
+                        // Add error message after selectpicker's parent
+                        $("#" + key).closest('.bootstrap-select').after('<span class="invalid-feedback text-danger">'+value+'</span>');
+                    } else {
+                        // Add 'is-invalid' class to other input fields
+                        $("#" + key).addClass("is-invalid").after('<span class="invalid-feedback text-danger">'+value+'</span>');
+                    }
                 });
             } else {
                 console.log('Error:', response);
@@ -60,6 +70,8 @@ function updateForm(userId) {
                 });
                 $('#edit_user' + userId).modal('hide');
                 form.find('input, select, button').val('');
+
+                window.location.href = "user";
             }
         },
         error: function(response) {
@@ -68,6 +80,47 @@ function updateForm(userId) {
                 var errors = response.responseJSON.errors;
                 $.each(errors, function (key, value) {
                     $("." + key).addClass("is-invalid").after('<span class="invalid-feedback text-danger">'+value+'</span>');
+                });
+            } else {
+                console.log('Error:', response);
+            }
+        }
+    });
+}
+
+// Tenant
+function submitTenant() {
+    var form = $('#addTenantForm');
+    var url = form.attr('action');
+    var method = form.attr('method');
+    var data = form.serialize();
+
+    form.find('.is-invalid').removeClass('is-invalid');
+    form.find('.invalid-feedback').remove(); 
+
+    $.ajax({
+        type: method,
+        url: url,
+        data: data,
+        success: function(response) {
+            if (response.success) {
+                // alert(response.message);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success',
+                    text: response.message
+                });
+                $('#add_tenant').modal('hide');
+                $('#addTenantForm').find('input, select, button').val('');
+
+                window.location.href = "tenant";
+            }
+        },
+        error: function(response) {
+            if (response.status === 422) {
+                var errors = response.responseJSON.errors;
+                $.each(errors, function (key, value) {
+                    $("#" + key).addClass("is-invalid").after('<span class="invalid-feedback text-danger">'+value+'</span>');
                 });
             } else {
                 console.log('Error:', response);

@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 use App\User;
+use App\Building;
+use App\Tenant;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -13,7 +14,8 @@ class UserController extends Controller
     public function index()
     {   
         $users = User::all();
-        return view('users.index', compact('users'));  
+        $buildings = Building::all();
+        return view('users.index', compact('users', 'buildings'));  
     }
 
     // Store
@@ -24,6 +26,7 @@ class UserController extends Controller
             'position' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'role' => 'required|string|max:255',
+            'location' => 'required|string|max:255',
             'password' => 'required|string|min:8',
         ]);
         
@@ -34,6 +37,7 @@ class UserController extends Controller
             $new_user->position = $request->position;
             $new_user->email = $request->email;
             $new_user->role = $request->role;
+            $new_user->location = $request->location;
             $new_user->password = bcrypt($request->password);
             $new_user->save();
 
@@ -47,7 +51,7 @@ class UserController extends Controller
     public function edit($id) 
     {
         $users = User::find($id);
-        return view('users.edit', compact('user'));  
+        return view('users.edit', compact('user', 'tenants'));  
     }
 
     // Update
@@ -73,6 +77,7 @@ class UserController extends Controller
             $update_user->position = $request->input('position');
             $update_user->email = $request->input('email');
             $update_user->role = $request->input('role');
+            $update_user->location = $request->input('location');
             $update_user->update();
 
             return response()->json(['success' => true, 'message' => 'User updated successfully!']);

@@ -21,17 +21,25 @@
                                             <th>Position</th>
                                             <th>Email</th>
                                             <th>Role</th>
+                                            <th>Location</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($users as $user)
                                         <tr>
-                                            <td width="22%">{{$user->name}}</td>
-                                            <td width="21%">{{$user->position}}</td>
-                                            <td width="21%">{{$user->email}}</td>
-                                            <td width="21%">{{$user->role}}</td>
-                                            <td width="15%" align="center">
+                                            <td width="20%">{{$user->name}}</td>
+                                            <td width="20%">{{$user->position}}</td>
+                                            <td width="20%">{{$user->email}}</td>
+                                            <td width="15%">{{$user->role}}</td>
+                                            <td width="15%">
+                                            @foreach($buildings as $building)
+                                                @if($building->id == $user->location)
+                                                    {{ $building->name }}
+                                                @endif
+                                            @endforeach
+                                            </td>
+                                            <td width="10%" align="center">
                                                 <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#edit_user{{ $user->id }}"><i class="fa fa fa-pencil"></i><a href="{{ url('update_user/' .$user->id) }}"></a></button>
                                                 <a href="{{ route('user.delete', ['id' => $user->id]) }}">
                                                     <button type="button" class="btn btn-danger btn-outline" title="Delete User"><i class="fa fa fa-ban"></i></button>
@@ -79,10 +87,18 @@
                         </div>
                         <div class="col-12 mb-10">
                             <label>Role</label>
-                            <select name="role" id="role" class="form-control selectpicker @if($errors->first('role')) is-invalid @endif" title="Select Position">
+                            <select name="role" id="role" class="form-control selectpicker @if($errors->first('role')) is-invalid @endif" title="Select Role">
                                 <option value="Admin">Admin</option>
                                 <option value="Guard">Guard</option>
                                 <option value="Tenant">Tenant</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-10">
+                            <label>Location</label>
+                            <select name="location" id="location" class="form-control form-control selectpicker @if($errors->first('location')) is-invalid @endif" title="Select Location">
+                                @foreach($buildings as $building)
+                                    <option value="{{ $building->id }}" {{ ($building->id == $building->name) ? 'selected' : '' }}> {{ $building->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-12 mb-10">

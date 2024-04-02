@@ -13,19 +13,28 @@ class TenantController extends Controller
     {   
         $buildings = Building::all();
         $tenants = Tenant::all();
-
         return view('tenants.index', compact('buildings', 'tenants'));
     }
 
     // Store
     public function store(Request $request) 
     {
-        $new_tenant = new Tenant;
-        $new_tenant->name = $request->name;
-        $new_tenant->building_id = $request->building_id;
-        $new_tenant->save();
-        Alert::success('Success Title', 'Success Message');
-        return back();
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'building_id' => 'required|string|max:255',
+        ]);
+        
+        try {
+
+            $new_tenant = new Tenant;
+            $new_tenant->name = $request->name;
+            $new_tenant->building_id = $request->building_id;
+            $new_tenant->save();
+    
+            return response()->json(['success' => true, 'message' => 'Tenant created successfully!']);
+        } catch (\Exception $e) {
+            return response()->json(['status' => false, 'message' => 'Error creating tenant.']);
+        }
     }
 
     // Edit

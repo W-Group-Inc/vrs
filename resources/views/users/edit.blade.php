@@ -34,6 +34,14 @@
                                 <option value="Tenant"{{$user->role == 'Tenant' ? ' selected' : ''}}>Tenant</option>
                             </select>
                         </div>
+                        <div class="col-12 mb-10">
+                            <label>Location</label>
+                            <select name="location" id="location" class="form-control selectpicker" title="Select Building Name"> 
+                                @foreach($buildings as $building)
+                                    <option value="{{ $building->id }}" {{ ($building->id == $user->location) ? 'selected' : '' }}> {{ $building->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
                 </div>
                 <div class="modal-footer">

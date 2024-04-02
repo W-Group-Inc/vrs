@@ -415,8 +415,12 @@ a[href="#previous"] {
     display: none !important;
 }
 .form-input {
-    color: #000;
+    color: #000 !important;
     height: 70px;
+}
+.webcam-container {
+    width: 420px; /* Set the desired width */
+    height: 340px; /* Set the desired height */
 }
 @media only screen and (max-width: 768px) {
     .company {
@@ -458,7 +462,7 @@ a[href="#previous"] {
     }
     .p-desc {
         font-size: 16px;
-        margin-bottom: 3em;
+        margin-bottom: 2em;
     }
     .p-tenant {
         font-size: 16px;
@@ -476,10 +480,10 @@ a[href="#previous"] {
         font-size: 20px;
     }
     .form-media {
-        margin-bottom: 5em;
+        margin-bottom: 3em;
     }
     .last_step {
-        margin-bottom: 5em;
+        margin-bottom: 3em;
     }
     .wizard > .content > .body ul {
         list-style: none !important;
@@ -491,4 +495,8 @@ a[href="#previous"] {
     .dropdown-menu > li > a {
         padding: 10px;
     }
+    div:where(.swal2-container) button:where(.swal2-styled).swal2-confirm {
+        font-size: 2em !important;
+    }
+    
 }

@@ -14,18 +14,21 @@ class VisitorController extends Controller
     {
         $building = Building::findOrfail($id);
         $visitors = Visitor::all();
-        $tenants = Tenant::pluck('name')->toArray();
-        return view('visitors.index', compact('visitors','tenants', 'building')); 
+        // $tenants = Tenant::pluck('name')->toArray();
+        $tenants = Tenant::where('building_id', $building->id)->pluck('name')->toArray();
+        return view('visitors.index', compact('visitors', 'tenants', 'building')); 
     }
 
     // Store
-    public function store(Request $request)
+    public function store(Request $request, $building_id)
     {
         $new_visitor = new Visitor;
         $new_visitor->scan_id = $request->scan_id;
         $new_visitor->image = $request->image;
         $new_visitor->name = $request->name;
         $new_visitor->tenant_name = $request->tenant_name;
+        $new_visitor->purpose = $request->purpose;
+        $new_visitor->building_location = $building_id;
         $new_visitor->save();
         Alert::success('Thank you!', 'Form submitted successfully');
         return back();
@@ -36,7 +39,8 @@ class VisitorController extends Controller
     public function visitor_id() 
     {
         $visitors = Visitor::where('return_id', null)->orderBy('id', 'desc')->get();
-        return view('visitors.visitor_id', compact('visitors')); 
+        $buildings = Building::all();
+        return view('visitors.visitor_id', compact('visitors', 'buildings')); 
     }
 
     // Add Visitor ID
