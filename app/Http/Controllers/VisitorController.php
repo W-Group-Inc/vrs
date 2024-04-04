@@ -30,7 +30,7 @@ class VisitorController extends Controller
         $new_visitor->purpose = $request->purpose;
         $new_visitor->building_location = $building_id;
         $new_visitor->save();
-        Alert::success('Thank you!', 'Form submitted successfully');
+        Alert::success('Thank you for visiting us today!', 'We hope you had a wonderful time exploring our building. Have a fantastic day ahead!');
         return back();
     }
 

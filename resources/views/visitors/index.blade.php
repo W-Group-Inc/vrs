@@ -22,6 +22,14 @@
 
     <body class="bg-vrs"> 
         <div class="wrapper animated fadeInLeft" align="center">
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h2 class="date-time">{{ date('l, F d, Y ') }}</h2>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-6">
+                    <h2 class="date-time" id='time'></h2>
+                </div>
+            </div>
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-content">
@@ -37,6 +45,7 @@
                             </section>
                             <h1>Profile</h1>
                             <section class="second-step">
+                            <!-- <a class="btn btn-default" onclick="previousStep()" align="left">&laquo; Previous</a> -->
                                 <h4>Visitor Details</h4>
                                 <h1 class="h1-title">Scan ID</h1>
                                 <p class="p-desc">and press the camera button to take your ID</p>
@@ -58,6 +67,7 @@
                             </section>
                             <h1>Warning</h1>
                             <section class="third-step">
+                            <!-- <a class="btn btn-default" onclick="previousStep1()" align="left">&laquo; Previous</a> -->
                             <h4>Visitor Details</h4>
                                 <h1 class="h1-title">Image</h1>
                                 <p class="p-desc">Looking good, press the camera button to take your Image</p>
@@ -98,7 +108,7 @@
                                     </div>
                                     <div class="form-group form-media">
                                         <label class="label_home">Purpose</label>
-                                        <select name="purpose" id="purpose" class="form-control form-input" title="Select Position">
+                                        <select name="purpose" id="purpose" class="form-control form-input" title="Select Purpose">
                                             <option value="Business Visits">Business Visits</option>
                                             <option value="Personal Visits">Personal Visits</option>
                                             <option value="Job Visits">Job Visits</option>
@@ -141,7 +151,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-            
+
             var app ={!! json_encode($tenants) !!};
             $(document).ready(function(){
                 $('.typeahead_1').typeahead({
@@ -199,10 +209,14 @@
                             }
                             return true;
                         }
+                        // function previousStep() {
+                        //     $("#wizard").steps("previous");
+                        // }
 
                         if (currentIndex > newIndex)
                         {
                             return false;
+                            
                         }
                         // Forbid suppressing "Warning" step if the user is to young
                         if (newIndex === 3 && Number($("#age").val()) < 18)
@@ -287,7 +301,7 @@
                         facingMode: 'user' 
                     }
                 });
-                
+
                 // Webcam.set("constraints", {
                 //     facingMode: "environment"
                 // });
@@ -341,6 +355,22 @@
 
                 toggleRetakeButton("retake_image_button", false);
             }
+            var span = document.getElementById('time');
+
+            function time() {
+                var d = new Date();
+                var s = d.getSeconds();
+                var m = d.getMinutes();
+                var h = d.getHours();
+                var ampm = h >= 12 ? 'PM' : 'AM';
+
+                h = h % 12;
+                h = h ? h : 12;
+
+                span.textContent = ("0" + h).substr(-2) + ":" + ("0" + m).substr(-2) + ":" + ("0" + s).substr(-2) + " " + ampm;
+            }
+
+            setInterval(time, 1000);
         </script>
 
     </body>

@@ -17,6 +17,7 @@
                                 <table class="table table-striped table-bordered table-hover table-responsive dataTables">
                                     <thead>
                                         <tr>
+                                            <th>No.</th>
                                             <th>Name</th>
                                             <th>Address</th>
                                             <th>Actions</th>
@@ -25,9 +26,10 @@
                                     <tbody>
                                         @foreach($buildings as $building)
                                             <tr>
+                                                <td width="5%">{{$building->id}}</td>
                                                 <td width="40%">{{$building->name}}</td>
-                                                <td width="45%">{{$building->address}}</td>
-                                                <td width="15%" align="center">
+                                                <td width="43%">{{$building->address}}</td>
+                                                <td width="12%" align="center">
                                                     <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#edit_building{{ $building->id }}"><i class="fa fa fa-pencil"></i><a href="{{ url('update_building/' .$building->id) }}"></a></button>
                                                     <a href="{{ route('building.delete', ['id' => $building->id]) }}">
                                                         <button type="button" class="btn btn-danger btn-outline" title="Delete User"><i class="fa fa fa-ban"></i></button>

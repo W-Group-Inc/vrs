@@ -27,7 +27,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $visitors = Visitor::all(); 
+        $visitors = Visitor::orderBy('id', 'desc')->get();
         $buildings = Building::all();
         return view('dashboard.index', compact('visitors', 'buildings')); 
     }

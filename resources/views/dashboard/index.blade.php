@@ -1,7 +1,7 @@
 @extends('layouts.header')
 @section('content')
-@if(@auth()->user()->name == 'Admin')
-<div class="wrapper wrapper-content" style="padding: 20px 10px 0px">
+@if(@auth()->user()->role == 'Admin')
+<div class="wrapper wrapper-content animated fadeInLeft" style="padding: 20px 10px 0px">
     <div class="row">
         <div class="col-lg-3">
             <div class="ibox float-e-margins">
@@ -85,7 +85,7 @@
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered table-hover table-responsive dataTables">
+                                                <table class="table table-striped table-bordered table-hover table-responsive acdataTables">
                                                     <thead>
                                                         <tr>
                                                             <th>Visitor</th>
@@ -174,4 +174,20 @@
         font-size: 20px;
     }
 </style>
+<script>
+    $(document).ready(function(){
+        var title = $('.ibox-title h5').text();
+        $('.dataTables').DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+                {extend: 'csv', title: title},
+                {extend: 'excel', title: title},
+                {extend: 'pdf', title: title},
+            ]
+        });
+    });
+
+</script>
 @endsection
