@@ -292,9 +292,9 @@
                     height: 340,
                     image_format: 'jpeg',
                     jpeg_quality: 90,
-                    constraints: {
-                        facingMode: 'user' 
-                    }
+                    // constraints: {
+                    //     facingMode: 'user' 
+                    // }
                 });
 
                 // Webcam.set("constraints", {
