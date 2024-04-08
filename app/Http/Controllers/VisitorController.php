@@ -34,7 +34,6 @@ class VisitorController extends Controller
         return back();
     }
 
-
     // Visitor ID List
     public function visitor_id() 
     {

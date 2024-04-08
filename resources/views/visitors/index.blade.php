@@ -297,9 +297,9 @@
                     // }
                 });
 
-                // Webcam.set("constraints", {
-                //     facingMode: "environment"
-                // });
+                Webcam.set("constraints", {
+                    facingMode: "environment"
+                });
                 
                 Webcam.attach( '#my_scan' );
                 Webcam.attach( '#my_image' );
