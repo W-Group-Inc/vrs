@@ -24,15 +24,16 @@
         <div class="wrapper animated fadeInLeft" align="center">
             <div class="row">
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <h2 class="date-time">{{ date('l, F d, Y ') }}</h2>
+                    <h2 style="color: #FFF">{{ date('l, F d, Y ') }}</h2>
                 </div>
                 <div class="col-xs-6 col-sm-6 col-md-6">
-                    <h2 class="date-time" id='time'></h2>
+                    <h2 style="color: #FFF" id='time'></h2>
                 </div>
             </div>
             <div class="col-lg-12">
                 <div class="ibox">
                     <div class="ibox-content">
+                        
                         <form id="wizard" action="{{ url('new_visitor', ['id' => $building->id])}}" method="POST" autocomplete="off">
                         @csrf
                             <h1>Welcome</h1>
@@ -45,7 +46,6 @@
                             </section>
                             <h1>Profile</h1>
                             <section class="second-step">
-                            <!-- <a class="btn btn-default" onclick="previousStep()" align="left">&laquo; Previous</a> -->
                                 <h4>Visitor Details</h4>
                                 <h1 class="h1-title">Scan ID</h1>
                                 <p class="p-desc">and press the camera button to take your ID</p>
@@ -67,7 +67,6 @@
                             </section>
                             <h1>Warning</h1>
                             <section class="third-step">
-                            <!-- <a class="btn btn-default" onclick="previousStep1()" align="left">&laquo; Previous</a> -->
                             <h4>Visitor Details</h4>
                                 <h1 class="h1-title">Image</h1>
                                 <p class="p-desc">Looking good, press the camera button to take your Image</p>
@@ -151,7 +150,7 @@
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
         <script>
-
+            
             var app ={!! json_encode($tenants) !!};
             $(document).ready(function(){
                 $('.typeahead_1').typeahead({
@@ -209,14 +208,10 @@
                             }
                             return true;
                         }
-                        // function previousStep() {
-                        //     $("#wizard").steps("previous");
-                        // }
 
                         if (currentIndex > newIndex)
                         {
                             return false;
-                            
                         }
                         // Forbid suppressing "Warning" step if the user is to young
                         if (newIndex === 3 && Number($("#age").val()) < 18)
