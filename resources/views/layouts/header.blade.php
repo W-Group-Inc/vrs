@@ -54,6 +54,7 @@
                             @auth
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                     <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">{{auth()->user()->name}}</strong>
+                                    <span class="clear"> <span class="block m-t-xs">{{auth()->user()->email}}
                                     </span> <span class="text-muted text-xs block">{{auth()->user()->position}}&nbsp;<b class="caret"></b></span> </span> 
                                 </a>
                                 <ul class="dropdown-menu animated fadeInRight m-t-xs">
