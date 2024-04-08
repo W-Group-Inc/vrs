@@ -1,6 +1,6 @@
 @extends('layouts.header')
 @section('content')
-@if(@auth()->user()->role == 'Admin')
+@if(auth()->user()->location || auth()->user()->role == 'Admin')
 <div class="wrapper wrapper-content animated fadeInLeft" style="padding: 20px 10px 0px">
     <div class="row">
         <div class="col-lg-3">
@@ -10,7 +10,7 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $visitorTotal = \App\Visitor::count();
+                        $visitorTotal = \App\Visitor::where('building_location', auth()->user()->location)->count();
                     @endphp
                     <h1 class="no-margins">{{ $visitorTotal }}</h1>
                     <div class="stat-percent font-bold text-success"><i class="fa fa-users"></i></div>
@@ -25,7 +25,9 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $businessTotal = \App\Visitor::where('purpose', 'Business Visits')->count();
+                        $businessTotal = \App\Visitor::where('purpose', 'Business Visits')
+                                        ->where('building_location', auth()->user()->location)
+                                        ->count();
                     @endphp
                     <h1 class="no-margins">{{ $businessTotal }}</h1>
                     <div class="stat-percent font-bold text-info"><i class="fa fa-briefcase"></i></div>
@@ -38,9 +40,11 @@
                 <div class="ibox-title">
                     <h5 class="text-navy">Personal visits</h5>
                 </div>
-                <div class="ibox-content">
+                <div class="ibox-content"> 
                     @php
-                        $personalTotal = \App\Visitor::where('purpose', 'Personal Visits')->count();
+                        $personalTotal = \App\Visitor::where('purpose', 'Personal Visits')
+                                        ->where('building_location', auth()->user()->location)
+                                        ->count();
                     @endphp
                     <h1 class="no-margins">{{ $personalTotal }}</h1>
                     <div class="stat-percent font-bold text-navy"><i class="fa fa-handshake-o"></i></div>
@@ -55,7 +59,9 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $jobTotal = \App\Visitor::where('purpose', 'Job Visits')->count();
+                        $jobTotal = \App\Visitor::where('purpose', 'Job Visits')
+                                    ->where('building_location', auth()->user()->location)
+                                    ->count();
                     @endphp
                     <h1 class="no-margins">{{ $jobTotal }}</h1>
                     <div class="stat-percent font-bold text-warning"><i class="fa fa-search"></i></div>

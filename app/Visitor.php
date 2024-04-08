@@ -9,4 +9,8 @@ class Visitor extends Model
     //
     protected $table = "visitors";
 
+    public function location()
+    {
+        return $this->belongsTo(Building::class);
+    }
 }

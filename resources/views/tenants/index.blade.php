@@ -24,6 +24,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($tenants as $tenant)
+                                            @if(auth()->user()->location == $tenant->building_id)
                                             <tr>
                                                 <td width="30%">{{ $tenant->name }}</td>
                                                 <td width="40%">{{ optional($tenant->building)->name }}</td>
@@ -34,6 +35,7 @@
                                                     </a>
                                                 </td>
                                             </tr>
+                                            @endif
                                         @endforeach
                                     </tbody>
                                 </table>
@@ -69,7 +71,9 @@
                             <label>Building Name</label>
                             <select name="building_id" id="building_id" class="form-control selectpicker @if($errors->first('building_id')) is-invalid @endif" title="Select Building Name">
                                 @foreach($buildings as $building)
-                                    <option value="{{ $building->id }}"> {{ $building->name }}</option>
+                                    @if(auth()->user()->location == $building->id)
+                                        <option value="{{ $building->id }}"> {{ $building->name }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
