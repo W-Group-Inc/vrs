@@ -298,7 +298,7 @@
                 });
 
                 Webcam.set("constraints", {
-                    facingMode: "environment"
+                    facingMode: "user"
                 });
                 
                 Webcam.attach( '#my_scan' );
