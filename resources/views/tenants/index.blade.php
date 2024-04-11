@@ -24,7 +24,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($tenants as $tenant)
-                                            @if(auth()->user()->location == $tenant->building_id)
+                                            @if(auth()->user()->location == null || auth()->user()->location == $tenant->building_id)
                                             <tr>
                                                 <td width="30%">{{ $tenant->name }}</td>
                                                 <td width="40%">{{ optional($tenant->building)->name }}</td>

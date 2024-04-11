@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-12 mb-10">
                             <label>Location</label>
-                            <select name="location" id="location" class="form-control selectpicker" title="Select Building Name"> 
+                            <select name="location[]" id="location" class="form-control selectpicker" title="Select Building Name" multiple> 
                                 @foreach($buildings as $building)
                                     <option value="{{ $building->id }}" {{ ($building->id == $user->location) ? 'selected' : '' }}> {{ $building->name }}</option>
                                 @endforeach

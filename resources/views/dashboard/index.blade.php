@@ -10,7 +10,11 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $visitorTotal = \App\Visitor::where('building_location', auth()->user()->location)->count();
+                        if (auth()->user()->location === null) {
+                            $visitorTotal = \App\Visitor::count();
+                        } else {
+                            $visitorTotal = \App\Visitor::where('building_location', auth()->user()->location)->count();
+                        }
                     @endphp
                     <h1 class="no-margins">{{ $visitorTotal }}</h1>
                     <div class="stat-percent font-bold text-success"><i class="fa fa-users"></i></div>
@@ -25,9 +29,13 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $businessTotal = \App\Visitor::where('purpose', 'Business Visits')
+                        if (auth()->user()->location === null) {
+                            $businessTotal = \App\Visitor::where('purpose', 'Business Visits')->count();
+                        } else {
+                            $businessTotal = \App\Visitor::where('purpose', 'Business Visits')
                                         ->where('building_location', auth()->user()->location)
                                         ->count();
+                        }
                     @endphp
                     <h1 class="no-margins">{{ $businessTotal }}</h1>
                     <div class="stat-percent font-bold text-info"><i class="fa fa-briefcase"></i></div>
@@ -42,9 +50,13 @@
                 </div>
                 <div class="ibox-content"> 
                     @php
-                        $personalTotal = \App\Visitor::where('purpose', 'Personal Visits')
-                                        ->where('building_location', auth()->user()->location)
-                                        ->count();
+                        if (auth()->user()->location === null) {
+                            $personalTotal = \App\Visitor::where('purpose', 'Personal Visits')->count();
+                        } else {
+                            $personalTotal = \App\Visitor::where('purpose', 'Personal Visits')
+                                            ->where('building_location', auth()->user()->location)
+                                            ->count();
+                        }
                     @endphp
                     <h1 class="no-margins">{{ $personalTotal }}</h1>
                     <div class="stat-percent font-bold text-navy"><i class="fa fa-handshake-o"></i></div>
@@ -59,9 +71,13 @@
                 </div>
                 <div class="ibox-content">
                     @php
-                        $jobTotal = \App\Visitor::where('purpose', 'Job Visits')
+                        if (auth()->user()->location === null) {
+                            $jobTotal = \App\Visitor::where('purpose', 'Job Visits')->count();
+                        } else {
+                            $jobTotal = \App\Visitor::where('purpose', 'Job Visits')
                                     ->where('building_location', auth()->user()->location)
                                     ->count();
+                        }
                     @endphp
                     <h1 class="no-margins">{{ $jobTotal }}</h1>
                     <div class="stat-percent font-bold text-warning"><i class="fa fa-search"></i></div>
@@ -154,8 +170,8 @@
                                                                         @endif
                                                                     @endforeach
                                                                 </td>
-                                                                <td>{{$visitor->purpose}}</td>
                                                                 <td>{{$visitor->tenant_name}}</td>
+                                                                <td>{{$visitor->purpose}}</td>
                                                                 <td>{{$visitor->created_at->format('m/d/Y h:i:s A')}}</td>
                                                                 <td>{{$visitor->updated_at->format('m/d/Y h:i:s A')}}</td>
                                                             </tr>

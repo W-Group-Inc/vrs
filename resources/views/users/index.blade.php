@@ -31,13 +31,20 @@
                                             <td width="20%">{{$user->name}}</td>
                                             <td width="20%">{{$user->position}}</td>
                                             <td width="20%">{{$user->email}}</td>
-                                            <td width="15%">{{$user->role}}</td>
+                                            <td width="15%">{{($user->role == null ? 'N/A' : $user->role)}}</td>
                                             <td width="15%">
-                                            @foreach($buildings as $building)
-                                                @if($building->id == $user->location)
-                                                    {{ $building->name }}
+                                                @php $found = false; @endphp
+                                                @foreach($buildings as $building)
+                                                    @if($building->id == $user->location)
+                                                        {{ $building->name }}
+                                                        @php $found = true; @endphp
+                                                        @break
+                                                    @endif
+                                                @endforeach
+
+                                                @if (!$found && $user->location === null)
+                                                    All Location
                                                 @endif
-                                            @endforeach
                                             </td>
                                             <td width="10%" align="center">
                                                 <button type="button" class="btn btn-success btn-outline" data-toggle="modal" data-target="#edit_user{{ $user->id }}"><i class="fa fa fa-pencil"></i><a href="{{ url('update_user/' .$user->id) }}"></a></button>
@@ -95,7 +102,7 @@
                         </div>
                         <div class="col-12 mb-10">
                             <label>Location</label>
-                            <select name="location" id="location" class="form-control form-control selectpicker @if($errors->first('location')) is-invalid @endif" title="Select Location">
+                            <select name="location[]" id="location" class="form-control form-control selectpicker @if($errors->first('location')) is-invalid @endif" title="Select Location" multiple>
                                 @foreach($buildings as $building)
                                     <option value="{{ $building->id }}" {{ ($building->id == $building->name) ? 'selected' : '' }}> {{ $building->name }}</option>
                                 @endforeach
