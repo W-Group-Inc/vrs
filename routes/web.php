@@ -21,6 +21,8 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('/dashboard', 'HomeController@index');
+    Route::get('view_active/{id}', 'HomeController@view_active');
+    Route::get('view_return/{id}', 'HomeController@view_return');
     
     // change password
     Route::get('change_password','HomeController@changePassword')->name('change_password');

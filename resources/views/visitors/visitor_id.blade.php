@@ -28,25 +28,22 @@
                                             @if(auth()->user()->location == $visitor->building_location || (auth()->user()->name == 'Admin'))
                                             <tr>
                                                 @if ($visitor->visitor_id === null)
-                                                <td style="background-color: #f14d4d" width="10%">{{$visitor->visitor_id}}</td>
+                                                    <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" style="background-color: #f14d4d" width="10%">{{$visitor->visitor_id}}</td>
                                                 @else
-                                                <td width="10%">{{$visitor->visitor_id}}</td>
+                                                    <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="10%">{{$visitor->visitor_id}}</td>
                                                 @endif
-                                                <td width="8%"><img class="img-visitor" src="{{$visitor->image}}"></td>
-                                                <td width="20%">{{$visitor->name}}</td>
-                                                <td width="17%">{{$visitor->created_at->format('m/d/Y h:i:s A')}}</td>
-                                                <td width="20%">{{$visitor->tenant_name}}</td>
-                                                <td width="15%">{{$visitor->purpose}}</td>
-                                                <td width="10%" align="center">
-                                                    <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" title="View Information" data-target="#view_id{{ $visitor->id }}"><i class="fa fa-eye"></i></button>
-                                                    @if ($visitor->visitor_id === null )
-                                                        <button type="button" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
-                                                    @else
-                                                        <button type="button" style="display: none" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
-                                                    @endif
+                                                <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="8%"><img class="img-visitor" src="{{$visitor->image}}"></td>
+                                                <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="22%">{{$visitor->name}}</td>
+                                                <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="17%">{{$visitor->created_at->format('m/d/Y h:i:s A')}}</td>
+                                                <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="20%">{{$visitor->tenant_name}}</td>
+                                                <td class="visitor-view" data-visitor-id="{{ $visitor->id }}" width="15%">{{$visitor->purpose}}</td>
+                                                <td width="8%" align="center">
+                                                    <!-- <button type="button" class="btn btn-primary btn-outline" data-toggle="modal" title="View Information" data-target="#view_id{{ $visitor->id }}"><i class="fa fa-eye"></i></button> -->
                                                     @if ($visitor->visitor_id === null)
+                                                        <button type="button" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
                                                         <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID" style="display: none"><i class="fa fa-repeat"></i></a>
                                                     @else
+                                                        <button type="button" style="display: none" class="btn btn-success btn-outline" title="Issue Visitor ID" data-toggle="modal" data-target="#add_id{{ $visitor->id }}"><i class="fa fa fa-plus"></i><a href="{{ url('new_id/' .$visitor->id) }}"></a></button>
                                                         <a href="{{ url('return_id/' . $visitor->id) }}" class="btn btn-danger btn-outline" title="Return ID"><i class="fa fa-repeat"></i></a>
                                                     @endif
                                                 </td>
@@ -111,6 +108,16 @@
                 {extend: 'excel', title: 'Visitor List'},
                 {extend: 'pdf', title: 'Visitor List'},
             ]
+        });
+    });
+
+    $(document).ready(function() {
+        $('.visitor-view').click(function() {
+            var visitorId = $(this).data('visitor-id');
+            
+            $(this).attr('data-toggle', 'modal');
+            $(this).attr('title', 'View Information');
+            $(this).attr('data-target', '#view_id' + visitorId);
         });
     });
 </script>

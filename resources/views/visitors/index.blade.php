@@ -196,9 +196,9 @@
                         }
 
                         if (currentIndex === 2) {
-                            var scan_id = $(".image").val();
+                            var image_id = $(".image").val();
 
-                            if (!scan_id) {
+                            if (!image_id) {
                                 Swal.fire({
                                     icon: 'warning',
                                     title: 'Oops...',

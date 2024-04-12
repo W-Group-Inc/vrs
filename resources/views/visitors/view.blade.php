@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3 class="modal-title" id="exampleModalLabel">Visitor Information</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px; color: red; font-size: 25px">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>

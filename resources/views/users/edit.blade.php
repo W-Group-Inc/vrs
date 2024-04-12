@@ -8,7 +8,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h3 class="modal-title" id="exampleModalLabel">Edit User</h3>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -25px; color: red; font-size: 25px">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="col-12 mb-10">
                             <label>Location</label>
-                            <select name="location[]" id="location" class="form-control selectpicker" title="Select Building Name" multiple> 
+                            <select name="location" id="location" class="form-control selectpicker" title="Select Building Name"> 
                                 @foreach($buildings as $building)
                                     <option value="{{ $building->id }}" {{ ($building->id == $user->location) ? 'selected' : '' }}> {{ $building->name }}</option>
                                 @endforeach

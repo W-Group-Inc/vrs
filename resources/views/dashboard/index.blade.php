@@ -107,7 +107,7 @@
                                     <div id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered table-hover table-responsive acdataTables">
+                                                <table class="table table-striped table-bordered table-hover table-responsive">
                                                     <thead>
                                                         <tr>
                                                             <th>Visitor</th>
@@ -120,7 +120,7 @@
                                                     <tbody>
                                                         @foreach($visitors->where('return_id', null) as $visitor)
                                                             @if(auth()->user()->location == $visitor->building_location || (auth()->user()->name == 'Admin'))
-                                                            <tr>
+                                                            <tr data-toggle="modal" title="View Information" data-target="#view_active{{ $visitor->id }}">
                                                                 <td>
                                                                     <img class="img-visitor" src="{{$visitor->image}}">&nbsp;&nbsp;{{$visitor->name}}
                                                                 </td>
@@ -145,7 +145,7 @@
                                     <div id="tab-2" class="tab-pane">
                                         <div class="panel-body">
                                             <div class="table-responsive">
-                                                <table class="table table-striped table-bordered table-hover table-responsive dataTables">
+                                                <table class="table table-striped table-bordered table-hover table-responsive">
                                                     <thead>
                                                         <tr>
                                                             <th>Visitor</th>
@@ -159,7 +159,7 @@
                                                     <tbody>
                                                         @foreach($visitors->where('return_id', 1) as $visitor)
                                                             @if(auth()->user()->location == $visitor->building_location || (auth()->user()->name == 'Admin'))
-                                                            <tr>
+                                                            <tr data-toggle="modal" title="View Information" data-target="#view_return{{ $visitor->id }}">
                                                                 <td>
                                                                     <img class="img-visitor" src="{{$visitor->image}}">&nbsp;&nbsp;{{$visitor->name}}
                                                                 </td>
@@ -191,25 +191,13 @@
         </div>
     </div>
 </div>
+@foreach($visitors as $visitor)
+    @include('dashboard.view')
+@endforeach
 <style>
     .stat-percent {
         font-size: 20px;
     }
 </style>
-<script>
-    $(document).ready(function(){
-        var title = $('.ibox-title h5').text();
-        $('.dataTables').DataTable({
-            pageLength: 25,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-                {extend: 'csv', title: title},
-                {extend: 'excel', title: title},
-                {extend: 'pdf', title: title},
-            ]
-        });
-    });
 
-</script>
 @endsection
