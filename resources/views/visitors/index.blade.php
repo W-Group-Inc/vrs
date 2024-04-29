@@ -281,7 +281,10 @@
                         // Add a class to the "Next" button in the first-step Section and change text
                         otherButtons.addClass("custom-background-class").find("a").text("Register Now");
                     } else if (currentSectionClass.includes("last_step")) {
-                        otherButtons.addClass("custom-background-class").find("a[href='#finish']").text("Confirm Registration");
+                        // otherButtons.addClass("custom-background-class").find("a[href='#finish']").text("Confirm Registration");
+                        otherButtons.addClass("custom-background-class").find("a[href='#finish']").text("Confirm Registration").one("click", function() {
+                            $(this).hide(); 
+                        });
                     } else {
                         otherButtons.addClass("custom-background-class").find("a").text("Next");
                     }
