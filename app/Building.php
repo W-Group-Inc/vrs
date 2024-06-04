@@ -9,6 +9,5 @@ class Building extends Model
     use SoftDeletes;
 
     protected $table = "buildings";
-
     
 }

@@ -51,4 +51,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('new_id/{id}', 'VisitorController@new_id');
     Route::get('return_id/{id}', 'VisitorController@return_id');
     Route::get('view_id/{id}', 'VisitorController@view_id');
+
+    // reports
+    Route::get('/report', 'ReportController@index');
+    Route::get('/filter', 'ReportController@filter')->name('visitors.filter');
 });

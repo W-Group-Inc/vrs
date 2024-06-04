@@ -79,6 +79,9 @@
                     <li>
                         <a href="{{ url('/tenant') }}"><i class="fa fa-home"></i><span class="nav-label">Tenants</span></a>
                     </li>
+                    <li>
+                        <a href="{{ url('/report') }}"><i class="fa fa-building"></i><span class="nav-label">Reports</span></a>
+                    </li>
                     @endif
                     @if (@auth()->user()->position == 'Administrator' && (@auth()->user()->name == 'Admin'))
                     <li>
